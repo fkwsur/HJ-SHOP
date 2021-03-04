@@ -1,0 +1,54 @@
+/* Header Area Start */
+.header{ margin: 0 5%;}
+.header h2{text-align: center; margin: 10px auto;}
+.header .sub_gnb{display: inline; display: flex; float: right; margin-top: -35px;}
+.gnb{
+  background-color: rgba(0, 0, 0, 0.397);
+  margin: 0 auto;
+}
+.gnb ul{
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.5rem;
+  margin: 20px 20% 0;
+  padding: 10px 0;
+  color: #fff;
+}
+/* main area start */
+.main_wrap .banner{
+  height: 500px;
+  width: 100%;
+}
+.main_wrap .banner img{
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+.main_wrap .products{width: auto; height: auto;}
+.main_wrap .products .item_wrap{
+  display: flex; 
+  justify-content: space-between;
+  margin: 50px 20%;
+}
+.main_wrap .products .item_wrap .item{
+  width: 200px; height: 300px;
+  border: 1px solid #000;
+}
+.main_wrap .products .item_wrap .img{
+  height: 200px;
+  background-color: black;
+}
+.main_wrap .products .item_wrap h3{
+  margin: 10px;
+}
+.main_wrap .products .item_wrap p{
+  margin: 10px;
+}
+
+/* 로그인 페이지 */
+.login{
+  text-align: center;
+}
+.login button{
+  margin: 0 5px;
+}
