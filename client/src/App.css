@@ -1,7 +1,15 @@
 /* Header Area Start */
-.header{ margin: 0 5%;}
-.header h2{text-align: center; margin: 10px auto;}
-.header .sub_gnb{display: inline; display: flex; float: right; margin-top: -35px;}
+.header{
+  display: grid; 
+  align-items: center;
+  margin: 10px 20%; 
+  grid-template-columns: 1fr 1fr 1fr
+}
+.header .admin{grid-column: 1/2; text-align: left;}
+.header .admin a:hover{color: rgb(76, 76, 201);}
+.header h2{font-size: 2.6rem; text-align: center; grid-column: 2/3;}
+.header .sub_gnb{grid-column: 3/4; text-align: right;}
+.header .sub_gnb p span{color: rgb(76, 76, 201);}
 .gnb{
   background-color: rgba(0, 0, 0, 0.397);
   margin: 0 auto;
@@ -14,6 +22,7 @@
   padding: 10px 0;
   color: #fff;
 }
+.gnb ul li a{color: #fff;}
 /* main area start */
 .main_wrap .banner{
   height: 500px;
@@ -24,24 +33,24 @@
   height: 100%;
   object-fit: fill;
 }
-.main_wrap .products{width: auto; height: auto;}
-.main_wrap .products .item_wrap{
+.products{width: auto; height: auto;}
+.products .item_wrap{
   display: flex; 
   justify-content: space-between;
   margin: 50px 20%;
 }
-.main_wrap .products .item_wrap .item{
+.products .item_wrap .item{
   width: 200px; height: 300px;
   border: 1px solid #000;
 }
-.main_wrap .products .item_wrap .img{
+.products .item_wrap .img{
   height: 200px;
   background-color: black;
 }
-.main_wrap .products .item_wrap h3{
+.products .item_wrap h3{
   margin: 10px;
 }
-.main_wrap .products .item_wrap p{
+.products .item_wrap p{
   margin: 10px;
 }
 

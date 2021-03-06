@@ -23,8 +23,9 @@ app.use(cors());
 
 app.use('/api/member', member);
 app.use('/api/email', email);
-/*
 app.use('/api/product', product);
+
+/*
 app.use('/api/buy_comment', buy_comment);
 app.use('/api/favorites', favorites);
 app.use('/api/basket', basket);
