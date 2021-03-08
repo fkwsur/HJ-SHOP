@@ -20,6 +20,7 @@ const shop_comment = require('./routes/shop_comment');
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cors());
+app.use('/img', express.static('./uploads'));
 
 app.use('/api/member', member);
 app.use('/api/email', email);
