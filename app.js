@@ -9,10 +9,10 @@ const bcrypt = require('bcryptjs');
 const member = require('./routes/member');
 const email = require('./routes/email');
 const product = require('./routes/product');
+const ask = require('./routes/ask');
 const buy_comment = require('./routes/buy_comment');
 const favorites = require('./routes/favorites');
 const basket = require('./routes/basket');
-const ask = require('./routes/ask');
 const answer = require('./routes/answer');
 const board = require('./routes/board');
 const shop_comment = require('./routes/shop_comment');
@@ -25,14 +25,15 @@ app.use('/img', express.static('./uploads'));
 app.use('/api/member', member);
 app.use('/api/email', email);
 app.use('/api/product', product);
+app.use('/api/ask', ask);
+app.use('/api/answer', answer);
+app.use('/api/board', board);
+
 
 /*
 app.use('/api/buy_comment', buy_comment);
 app.use('/api/favorites', favorites);
 app.use('/api/basket', basket);
-app.use('/api/ask', ask);
-app.use('/api/answer', answer);
-app.use('/api/board', board);
 app.use('/api/shop_comment', shop_comment);
 */
 app.listen(8080, () => {

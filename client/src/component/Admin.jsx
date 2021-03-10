@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {ProductManage} from './ProductManage';
-import {Qna} from './Qna';
+import {AdminQna} from './AdminQna';
 
 export const Admin = () => {
     const [menuType, setMenuType] = useState('product');
@@ -18,7 +18,7 @@ export const Admin = () => {
                 <li onClick={() => setMenuType('Qna')}>문의관리</li>
             </ul>
         </div>
-        {menuType == 'product' ? <ProductManage /> : menuType == 'Qna' ? <Qna /> : ''}
+        {menuType == 'product' ? <ProductManage /> : menuType == 'Qna' ? <AdminQna /> : ''}
         </>
 
         : 

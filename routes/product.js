@@ -22,8 +22,22 @@ router.post('/product_add_item', upload.fields([{name : 'image'},{name : 'detail
 });
 
 router.get('/product_list', (req, res) => {
-	let sql = 'select * from shop_product';
-	db.query(sql, (err, rows) => {
+	let {p_idx} = req.body;
+	console.log(p_idx);
+	let sql = 'select * from shop_product where deleted = ?';
+	var data = ['no'];
+	db.query(sql,data, (err, rows) => {
+		if(err) console.log(err);
+		res.send(rows);
+	});
+})
+
+router.get('/product_delete_list', (req, res) => {
+	let {p_idx} = req.body;
+	console.log(p_idx);
+	let sql = 'select * from shop_product where deleted = ?';
+	var data = ['yes'];
+	db.query(sql,data, (err, rows) => {
 		if(err) console.log(err);
 		res.send(rows);
 	});
@@ -34,8 +48,8 @@ router.get('/product_list', (req, res) => {
 router.post('/product_detail_list', (req, res) => {
 	let {p_idx} = req.body;
 	console.log(p_idx);
-	let sql = 'select * from shop_product where p_idx = ?'; 
-	var data = [p_idx];
+	let sql = 'select * from shop_product where p_idx = ? and deleted = ?'; 
+	var data = [p_idx, 'no'];
 	db.query(sql,data, (err, rows) => {
 		if(err) console.log(err);
 		console.log(rows);
@@ -70,7 +84,7 @@ router.post('/AdminUpdate', upload.fields([{name : 'image'},{name : 'detailImage
  	}
 	
 	let {p_idx, title, price, select, content} = req.body;
-	let sql = 'update shop_product set p_name = ?, p_price = ?, category = ?, p_content = ?, p_img = ?, p_img2 = ?, main = ?, deleted = ? where p_idx = ? ';
+	let sql = 'update shop_product set p_name = ?, p_price = ?, category = ?, p_content = ?, p_img = ?, p_img2 = ?, main = ?, deleted = ? where p_idx = ?';
 	var data = [title, price, select, content, image, detailImage, 'no', 'no', p_idx]
 	db.query(sql,data, (err, rows) => {
 		if(err) console.log(err);
@@ -82,7 +96,6 @@ router.post('/AdminUpdate', upload.fields([{name : 'image'},{name : 'detailImage
 	})
 });
 
-
 router.post('/AdminDelete', (req, res) => {
 	let {p_idx} = req.body;
 	console.log(p_idx);
@@ -92,6 +105,52 @@ router.post('/AdminDelete', (req, res) => {
 		if(err) console.log(err);
 		console.log(rows);
 		res.send('1');
+	});
+})
+
+router.get('/main',(req, res) => {
+	let sql = 'select * from shop_product where main = ?';
+	var data = ['yes'];
+	db.query(sql,data, (err,rows) => {
+		if(err) console.log(err);
+		console.log(rows);
+		res.send(rows);
+	});
+}); 
+
+router.post('/main_yes',(req, res) => {
+	let {p_idx} = req.body;
+	console.log(p_idx);
+	console.log('값');
+	let sql = 'update shop_product set main = ? where p_idx = ?';
+	var data = ['yes', p_idx];
+	db.query(sql,data, (err,rows) => {
+		if(err) console.log(err);
+		console.log(rows);
+		res.send(rows);
+	});
+}); 
+
+router.post('/main_no',(req, res) => {
+	let {p_idx} = req.body;
+	console.log(p_idx);
+	console.log('값');
+	let sql = 'update shop_product set main = ? where p_idx = ?';
+	var data = ['no', p_idx];
+	db.query(sql,data, (err,rows) => {
+		if(err) console.log(err);
+		console.log(rows);
+		res.send(rows);
+	});
+}); 
+
+
+router.get('/main_count', (req, res) => {
+	let sql = 'select count(*) AS count from shop_product where main = "yes"';
+	db.query(sql, (err,rows) => {
+		if(err) console.log(err);
+		console.log(rows);
+		res.send(rows);
 	});
 })
 

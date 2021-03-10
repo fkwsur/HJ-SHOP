@@ -35,7 +35,9 @@
 }
 .products{width: auto; height: auto;}
 .products .item_wrap{
-  display: flex; 
+  display: grid; 
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-row-gap: 20px;
   justify-content: space-between;
   margin: 50px 20%;
 }
@@ -44,8 +46,11 @@
   border: 1px solid #000;
 }
 .products .item_wrap .img{
-  height: 200px;
+  width: 200px; height: 200px;
   background-color: black;
+}
+.products .item_wrap .img img{
+  width: 100%; height: 100%;  object-fit: cover;
 }
 .products .item_wrap h3{
   margin: 10px;

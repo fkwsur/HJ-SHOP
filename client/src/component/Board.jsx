@@ -1,16 +1,238 @@
-import React from 'react';
+import {useEffect, useState} from 'react';
+import {BoardDetail} from './BoardDetail';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-export const Board = () => {
+export const Board = ({match}) => {
+	const [showDetail, setShowDetail] = useState(false); 
+	const [title, setTitle] = useState('');
+	const [content, setContent] = useState('');
+	const [list, setList] = useState([]);
+	const [disable, setDisable] = useState(false); 
+
+
+	useEffect(() => {
+
+		console.log(list.writer);
+		console.log('워후 보여줘요!!');
+		
+		axios.get('/api/board/board_list')
+		.then(res => {
+			console.log(res.data);
+			setList(res.data);
+		})
+		.catch(err => {
+			console.log(err);
+		})
+
+	},[]);
+
+	const onChange = (e) => {
+		const {
+			target : {name, value},
+		} = e;
+		if(name === "title"){
+			setTitle(value);
+		} else if (name === "content"){
+			setContent(value);
+		}
+	};
+
+	const onSubmit = (e) => {
+		e.preventDefault();
+	
+		axios.post('/api/board/board', {
+			title : title,
+			content : content,
+			id : window.sessionStorage.getItem('id'),
+		})
+		.then(res => {
+				alert('등록이 완료');
+				window.location.reload();
+		}).catch(err => {
+				alert('등록 실패');
+		});
+	};
+
+
     return(
     <>
-        <h1>게시판입니당~~</h1>
-        <div class="snb">
-            <ul>
-                <li>Event</li>
-                <li>Faq</li>
-                <li>자유게시판</li>
-            </ul>
-        </div>
+        <h1>자유게시판</h1>
+        <div class="qna">
+				{showDetail == true  ?
+					<>
+		
+					<BoardDetail
+					id={window.sessionStorage.getItem('id')}
+					date="20.01.01"
+					title={title} 
+					content={content}
+					onSubmit={onSubmit} 
+					onChange={onChange} 
+					/>
+					<button onClick={() => setShowDetail(false)}>취소하기</button>
+					</>
+					:	
+					<>
+						<button onClick={() => setShowDetail(true)}>등록하기</button>
+							<table>
+								<tr>
+										<th>NO</th>
+										<th>제목</th>
+										<th>내용</th>
+										<th>글쓴이</th>
+										<th>등록일</th>
+										<th>상세보기</th>
+								</tr>
+						{list ? list.map(k => {
+								return(
+            	        <tr>
+            	            <td>{k.idx}</td>
+            	            <td>{k.title}</td>
+            	            <td>{k.content}</td>
+            	            <td>{k.writer}</td>
+            	            <td>{k.created}</td>
+            	            <td>
+													<button> 
+														<Link to={`/board/boardUpdate/${k.idx}`}>상세보기</Link>
+													</button>
+													</td>
+            	        </tr>
+								)
+							}) : "Error"
+						}
+							</table>	
+					</>
+				}
+			</div>
     </>
     );
+}
+
+export const BoardUpdate = () => {
+	const [showDetail, setShowDetail] = useState(false); 
+	const [title, setTitle] = useState('');
+	const [content, setContent] = useState('');
+	const [boardList, setBoardList] = useState({}); 
+
+	useEffect(() => {
+		const url = window.location.pathname;
+		const idx = url.split('/')[3];
+		console.log(idx);
+		axios.post('/api/board/board_detail', {
+			idx : idx		
+		})
+		.then(res => {
+			console.log('1');
+			console.log(res.data);
+			console.log(res.data[0])
+			setTitle(res.data[0].title);
+			setContent(res.data[0].content);
+			setBoardList(res.data[0]);
+		})
+		.catch(err => {
+			console.log(err);
+		})
+	},[]);
+
+	const onChange = (e) => {
+		const {
+			target : {name, value},
+		} = e;
+		if(name === "title"){
+			setTitle(value);
+		} else if (name === "content"){
+			setContent(value);
+		}
+	};
+
+	const onSubmit = (e) => {
+		e.preventDefault();
+		const url = window.location.pathname;
+		const idx = url.split('/')[3];
+		axios.post('/api/board/boardUpdate', {
+			idx : idx,
+			title : title,
+			content : content,
+		})
+		.catch(err => {
+			console.log(err);
+		})
+		.then(res => {
+				alert('수정이 완료');
+				window.location.href = "/board";
+		
+		}).catch(err => {
+				alert('수정 실패');
+		});
+	};
+
+	const handleDelete = () => {
+		const url = window.location.pathname;
+		const idx = url.split('/')[3];
+		console.log(idx);
+		axios.post('/api/board/boardDelete', {
+			idx : idx		
+		})
+		.then(res => {
+				alert('삭제 완료');
+				window.location.href = "/board";
+		}).catch(err => {
+				alert('삭제 실패');
+		});
+	}
+
+
+	return(
+		<div>
+		{window.sessionStorage.getItem('id') == boardList.writer ?
+		<form onSubmit={onSubmit}>
+			<table>
+				<tr>
+						<th>NO</th>
+						<td>{boardList.idx}</td>
+						<th>글쓴이</th>
+						<td>{boardList.writer}</td>
+				</tr>
+				<tr>
+						<th>제목</th>
+						<td><input type="text" name="title" value={title} onChange={onChange} 	required/></td>
+						<th>등록일</th>
+						<td>{boardList.created}</td>
+				</tr>
+				<tr>
+					<th>내용</th>
+					<td colspan="3">
+						<textarea type="text" name="content" value={content} 	onChange={onChange} required/>
+					</td>
+				</tr>
+			</table>	
+				<button type="submit" value="submit">수정하기</button>
+				<button type="button" onClick={handleDelete}>삭제하기</button>
+		</form>
+		: 
+		<form>
+			<table>
+				<tr>
+						<th>NO</th>
+						<td>{boardList.idx}</td>
+						<th>글쓴이</th>
+						<td>{boardList.writer}</td>
+				</tr>
+				<tr>
+						<th>제목</th>
+						<td>{boardList.title}</td>
+						<th>등록일</th>
+						<td>{boardList.created}</td>
+				</tr>
+				<tr>
+					<th>내용</th>
+					<td colSpan="3">{boardList.content}</td>
+				</tr>
+			</table>	
+		</form>
+		}
+	</div>
+
+	)
 }

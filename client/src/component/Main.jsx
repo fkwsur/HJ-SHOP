@@ -1,7 +1,8 @@
-import React from 'react';
+import {useEffect, useState} from 'react';
 import mainImg from '../image/sadasdas.PNG';
 import { Link } from 'react-router-dom';
 import store from '../store/store';
+import axios from 'axios';
 import { faShoppingBasket} from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
@@ -49,42 +50,43 @@ export const Header = () => {
 }
 
 export const Main = () => {
+    const [mainList, setMainList] = useState([]);
+
+    useEffect(() => {
+        axios.get('/api/product/main')
+        .then(res => {
+			console.log(res);
+            setMainList(res.data);
+		})
+		.catch(err => {
+			console.log(err);
+		})
+	},[]);
+
     return(
         <>
         <div class="main_wrap">
 
-            
             <div class="banner">
                 <img src={mainImg} alt="메인이미지"/>
             </div>
             <div class="products">
                 <div class="item_wrap">
-                  <div class="item">
-                      <div class="img"><img /></div>
-                      <h3>옷입니당</h3>
-                      <p>이 옷으로 말하자면 이러쿵저러쿵 어허어허어허 말돌리지마</p>
-                  </div>
-                  <div class="item">
-                      <div class="img"><img /></div>
-                      <h3>옷입니당</h3>
-                      <p>이 옷으로 말하자면 이러쿵저러쿵 어허어허어허 말돌리지마</p>
-                  </div>
-                  <div class="item">
-                      <div class="img"><img /></div>
-                      <h3>옷입니당</h3>
-                      <p>이 옷으로 말하자면 이러쿵저러쿵 어허어허어허 말돌리지마</p>
-                  </div>
-                  <div class="item">
-                      <div class="img"><img /></div>
-                      <h3>옷입니당</h3>
-                      <p>이 옷으로 말하자면 이러쿵저러쿵 어허어허어허 말돌리지마</p>
-                  </div>
+                {mainList ? mainList.map( k => {
+                    return(
+                        <>
+                              <div class="item">
+                                  <div class="img"><img src={k.p_img}/></div>
+                                  <h3>{k.p_name}</h3>
+                                  <p>{k.content}</p>
+                              </div>
+                        </>
+                        )
+                    }) : ''
+                  }
                 </div>
             </div>
-        
-
-
-        </div>{/* wrap area end */}
+        </div>
         </>
     );
 }
