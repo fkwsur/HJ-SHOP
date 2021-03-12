@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 export const QnaAnswer = ({ props, match }) => {
@@ -50,9 +51,11 @@ export const QnaAnswer = ({ props, match }) => {
 
 
 	return(
-			<div class="qna">
-				<h2>답변하기</h2>
+			<div class="container">
+				<h2>Admin</h2>
 				<form onSubmit={onSubmit}>
+				<button type="submit" value="submit" className="btn">답변하기</button>
+				<Link to="/admin"><button className="btn">취소하기</button></Link>
 					<table>
 						<tbody>
 								<tr>
@@ -74,7 +77,6 @@ export const QnaAnswer = ({ props, match }) => {
 								</tr>
 						</tbody>
 					</table>
-					<button type="submit" value="submit">등록하기</button>
 				</form>
 			</div>
 	);

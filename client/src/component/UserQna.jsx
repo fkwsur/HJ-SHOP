@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 
-export const UserQna = () => {
+export const UserQna = (props) => {
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
 	const [qnaList, setQnaList] = useState({});
@@ -43,12 +43,16 @@ export const UserQna = () => {
 			});
 	};
 
-
+	const onClick = () => {
+		window.location.reload()
+	}
 
 
 	return(
 			<div class="qna">
 				<form onSubmit={onSubmit}>
+					<button type="submit" value="submit" className="btn">등록하기</button>
+					<button onClick={onClick} className="btn">취소하기</button>
 					<table>
 						<tbody>
 								<tr>
@@ -70,7 +74,6 @@ export const UserQna = () => {
 								</tr>
 						</tbody>
 					</table>
-					<button type="submit" value="submit">등록하기</button>
 				</form>
 			</div>
 	);

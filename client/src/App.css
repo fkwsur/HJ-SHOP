@@ -1,62 +1,240 @@
-/* Header Area Start */
+/********************************************** 공동선언 */
+body{  background-color: #f2eebe; }
+.main{
+  width: 87%; 
+  height: auto; 
+  float: right;
+  background-color: #f2eebe; 
+  overflow-x: hidden;
+}
 .header{
-  display: grid; 
-  align-items: center;
-  margin: 10px 20%; 
-  grid-template-columns: 1fr 1fr 1fr
+  width: 13%; height: 100%;
+  position: fixed; left: 0px; top: 0;
+  float: left;
+  background-color: #005060;
+  border: 1px solid #001c22;
+  overflow-y:auto;
+  overflow-x:hidden;
 }
-.header .admin{grid-column: 1/2; text-align: left;}
-.header .admin a:hover{color: rgb(76, 76, 201);}
-.header h2{font-size: 2.6rem; text-align: center; grid-column: 2/3;}
-.header .sub_gnb{grid-column: 3/4; text-align: right;}
-.header .sub_gnb p span{color: rgb(76, 76, 201);}
-.gnb{
-  background-color: rgba(0, 0, 0, 0.397);
-  margin: 0 auto;
+
+/* SCROLL */
+::-webkit-scrollbar{width: 11px;}
+/* 스크롤바의 전체 배경색 */
+::-webkit-scrollbar-thumb {
+position: absolute;
+top: 0;
+right: 0;
+background-color: #005060;
+opacity: 1;
+width: 7px;
+border-radius: 0;
+margin: 0;
+cursor: -webkit-grab;
+cursor: grab;
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
+border: 1px solid #001c22;
 }
+
+/* 스크롤바 색 */
+::-webkit-scrollbar-button {
+display: none;
+}
+
+/* Header Area Start */
+.header,
+.header h2 a,
+.gnb ul li, 
+.gnb ul li a, 
+.gnb ul li button,
+.icon,
+.icon a{
+  color: #f2eebe;
+  text-align: center;
+}
+
+.header h2{
+  font:400 5rem/1.5 'Teko', sans-serif;
+  margin-top: 45px;
+}
+.header h2:hover{
+  -webkit-transform:scale(1.2);
+  -moz-transform:scale(1.2);
+  -ms-transform:scale(1.2); 
+  -o-transform:scale(1.2);  
+  transform:scale(1.2);
+  -webkit-transition:.3s;
+  -moz-transition:.3s;
+  -ms-transition:.3s;
+  -o-transition:.3s;
+  transition:.3s;
+}
+
+.header input{
+  margin-top: 50px;
+  width: 65%;
+  border: 0;
+  border-bottom: 1px solid #f2eebe;
+  background-color: #005060;
+  text-indent: 10px;
+  outline: none;
+  color: #f2eebe;
+  font: 2rem/1.5 'Noto Sans KR', sans-serif;
+}
+.header input::placeholder {
+  color: #f2eebe;
+  font: 2rem/1.5 'Noto Sans KR', sans-serif;
+  letter-spacing: -0.5px;
+}
+
 .gnb ul{
-  display: flex;
-  justify-content: space-between;
+  margin:120px 0;
+  height:330px;
   font-size: 1.5rem;
-  margin: 20px 20% 0;
-  padding: 10px 0;
-  color: #fff;
 }
-.gnb ul li a{color: #fff;}
-/* main area start */
-.main_wrap .banner{
-  height: 500px;
+
+.gnb ul li, .gnb ul li a{
+  font: bold 2rem/1.5 'Noto Sans KR', sans-serif;
+  margin-top: 20px;
+}
+.gnb ul li:hover{
+  -webkit-transform:scale(1.2);
+  -moz-transform:scale(1.2);
+  -ms-transform:scale(1.2); 
+  -o-transform:scale(1.2);  
+  transform:scale(1.2);
+  -webkit-transition:.3s;
+  -moz-transition:.3s;
+  -ms-transition:.3s;
+  -o-transition:.3s;
+  transition:.3s;
+}
+.icon{
+  margin: 100px 0 40px;
   width: 100%;
+  font-size:1.5rem;
+}
+.icon button{margin:0 7.5px;}
+.icon p{
+    display: inline;
+    text-transform: capitalize;
+}
+
+/* main area start */
+/* 배너 */
+.main_wrap .banner{
+  width: 100%;
+  height: 100vh;
+  position: relative;
 }
 .main_wrap .banner img{
   width: 100%;
   height: 100%;
-  object-fit: fill;
+  object-fit: cover;
+  filter: opacity(85%);
 }
-.products{width: auto; height: auto;}
+.main_wrap .main_title{
+  width:100%;
+  position: absolute; top: 0; left: 0px;
+  margin-left:73%;
+  font:700 15rem/1.5 'Teko', sans-serif;
+  color:rgba(255, 255, 255, 0.61);
+}
+/* 소개 */
+.section{
+  margin:100px; 
+  color: #005060;
+}
+.section h2{
+  font:100 10rem/1.5 'Noto Sans KR', sans-serif;
+}
+.section p{
+  width: 80%;
+  margin-top: 30px;
+  font: 400 2rem/1.5 'Noto Sans KR', sans-serif;
+  text-align: justify;
+  color: #001c22;
+}
+
+/* 상품소개 */
+.main_wrap .products{
+  width: auto; 
+  height: auto; 
+  background-color: #005060; 
+  padding:120px;
+  box-shadow: 
+  -1px -1px 15px 9px rgb(0 0 0 / 10%),
+  -1px -1px 15px 9px rgb(0 0 0 / 10%),
+  -1px -1px 15px 9px rgb(0 0 0 / 10%),
+  -1px -1px 15px 9px rgb(0 0 0 / 10%);
+}
+
+/* 상품소개 공동 영역 */
 .products .item_wrap{
   display: grid; 
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 20px;
   grid-row-gap: 20px;
   justify-content: space-between;
-  margin: 50px 20%;
+
 }
 .products .item_wrap .item{
-  width: 200px; height: 300px;
+  width: 385px; height: 385px;
   border: 1px solid #000;
+  background-color: #005060;
+  position: relative;
 }
-.products .item_wrap .img{
-  width: 200px; height: 200px;
-  background-color: black;
+.products .item_wrap .item img{
+  width: 100%; height: 100%; 
+  object-fit: cover;
 }
-.products .item_wrap .img img{
-  width: 100%; height: 100%;  object-fit: cover;
+.products .item_wrap .caption{
+  width: 100%; height: 100%;
+  position: absolute; left: 0; bottom: 0;
+  background-color: #f2eebe;
+  color: #005060;
+  padding:50px;
+  opacity: 0;
+  -webkit-transition: all ease 0.5s;
+  -moz-transition: all ease 0.5s;
+  -o-transition: all ease 0.5s;
+  transition: all ease 0.5s;
 }
-.products .item_wrap h3{
-  margin: 10px;
+.products .item_wrap .item:hover .caption{
+  opacity: 1;
 }
-.products .item_wrap p{
-  margin: 10px;
+.products .item_wrap .caption h3{
+  font: 400 4rem/1.5 'Noto Sans KR', sans-serif;
+  margin-top: 50px;
+}
+.products .item_wrap .caption p{
+  font: 300 3rem/1.5 'Noto Sans KR', sans-serif;
+}
+.products .item_wrap .item .caption a{
+  font: 300 2rem/80px 'Noto Sans KR', sans-serif;
+  color: #005060;
+  padding: 7px 10px;
+  border: 1px solid #005060;
+}
+.products .item_wrap .item .caption a:hover{
+  color: #f2eebe;
+  background-color: #005060;
+}
+
+.section3{
+  text-align: right;
+}
+.section3 p{
+  text-align: right;
+  float: right;
+}
+
+.footer{
+  height: 80px;
+  text-align: center;
+  background-color: #005060;
+  color: #f2eebe;
+  font: 300 1.3rem/80px helvetica, sans-serif;
 }
 
 /* 로그인 페이지 */
@@ -65,4 +243,82 @@
 }
 .login button{
   margin: 0 5px;
+}
+
+/* 각페이지등 공동 선언 */
+.container{
+  min-height: 70vh;
+  margin: 100px;
+}
+.container h2{
+  font: 100 10rem/1.5 'Noto Sans KR', sans-serif;
+  color: #005060;
+  margin-bottom: 80px;
+}
+.container .products .item_wrap .item{
+  background-color: #f2eebe;
+}
+.container .products .item_wrap .caption{
+  background-color: #005060;
+  color: #f2eebe;
+}
+.container .products .item_wrap .caption a{
+  color: #f2eebe;
+  border: 1px solid #f2eebe;
+}
+
+/* 각 페이지들 리스트 테이블 */
+table, tr, th, td{border: 1px solid #005060; color: #005060;}
+td a,td button{color: #005060;}
+table{
+  border-radius: 30%;
+  width: 100%;
+  text-align: center;
+  font-size: 1.5rem;
+}
+th, td{padding:5px;}
+
+/* admin 탭메뉴 */
+.tab{
+  display:flex;
+  font: 400 2rem 'Noto Sans KR', sans-serif;
+  color: #005060;
+  margin-bottom: 40px;
+}
+.tab span{margin:0 25px;}
+
+/* 등록하기 버튼 */
+.btn{
+  font-size: 1.3rem;
+  /* background-color: #005060;  */
+  border: 1px solid #005060; 
+  color: #005060;
+  padding: 10px 5px; 
+  border-radius: 10%;
+  margin-bottom: 20px;
+  margin-right: 20px;
+}
+.btn:hover{color: #f2eebe; background-color: #005060;}
+
+.btnDetail{ padding: 7px; margin: 0 auto;}
+.btnDetail a{
+  font-size: 1.3rem;
+}
+.btnDetail:hover a{
+  color: #f2eebe;
+}
+
+.btnDetail2{ 
+  padding: 7px; 
+  margin: 0 auto; 
+  background-color: #005060;
+  color: #f2eebe;
+}
+.btnDetail2:hover{
+  background-color: #f2eebe;
+  color: #005060;
+}
+
+.answerTable{
+  margin-top: 20px;
 }

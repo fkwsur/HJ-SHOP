@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 export const AdminUpdate = ({ props, match }) => {
@@ -99,6 +100,7 @@ export const AdminUpdate = ({ props, match }) => {
 		})
 		.then(res => {
 				alert('삭제 완료');
+				window.location.href = "/admin";
 		}).catch(err => {
 				alert('삭제 실패');
 		});
@@ -106,13 +108,16 @@ export const AdminUpdate = ({ props, match }) => {
 
 
 	return(
-		<>
+		<div className="container">
+			<h2>Admin</h2>
 		{window.sessionStorage.getItem('id') === 'admin'
 		?
 		<>
-		<h2>상세페이지</h2>
 
 			<form onSubmit={onSubmit}>
+			<button type="submit" value="submit" className="btn">수정하기</button>
+				<button type="button" onClick={handleDelete} className="btn">삭제하기</button>
+				<Link to="/admin"><button className="btn">취소하기</button></Link>
 				<table>
 					<tbody>
 						<tr>
@@ -155,13 +160,11 @@ export const AdminUpdate = ({ props, match }) => {
 
 					</tbody>
 				</table>
-				<button type="submit" value="submit">수정하기</button>
-				<button type="button" onClick={handleDelete}>삭제하기</button>
 			</form>
 		</>
 		: 
 		<p>접근 권한이 없습니다.</p>
 		}
-	</>
+	</div>
 	);
 }

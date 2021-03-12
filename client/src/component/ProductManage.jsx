@@ -11,7 +11,6 @@ export const ProductManage = (props) => {
 	const [select, setSelect] = useState('');
 	const [content, setContent] = useState('');
 	const [showDetail, setShowDetail] = useState(false); 
-	const [showUpdate, setShowUpdate] = useState(false); 
 	const [productList, setProductList] = useState([]); 
 	const [deleteList, setDeleteList] = useState([]); 
 	const [deleteButton, setDeleteButton] = useState(false); 
@@ -168,9 +167,7 @@ export const ProductManage = (props) => {
 	return(
 			<>
 			{showDetail == true  ?
-
 			<AdminDetail
-					h2="등록페이지"
 					onSubmit={onSubmit} 
 					onChange={onChange} 
 					FileChange={FileChange} 
@@ -180,12 +177,14 @@ export const ProductManage = (props) => {
 					price={price}
 					select={select}
 					content={content}
+					deleteBtn="btn"
+					onClick={() => setShowDetail(false)}
 			/> 
 			:	
-			<div class="product">
-					<button onClick={() => setDeleteButton(false)}>상품 리스트</button>
-					<button onClick={onClick}>상품 등록</button>
-					<button onClick={onDelete}>삭제된 게시글</button>
+			<div class="product board">
+					<button onClick={onClick} className="btn">상품 등록</button>
+					<button onClick={() => setDeleteButton(false)} className="btn">상품 리스트</button>
+					<button onClick={onDelete} className="btn">삭제된 게시글</button>
 				
 					<table>
 						{	deleteButton == false ?
@@ -209,16 +208,16 @@ export const ProductManage = (props) => {
 												<td>{k.p_price}</td>
 												<td>{k.category}</td>
 												<td>
-													<button> 
+													<button className="btn btnDetail"> 
 														<Link to={`/admin/AdminUpdate/${k.p_idx}`}>상세보기</Link>
 													</button>
 												</td>
 												<td>{k.main}</td>
 												<td>
 													{k.main == 'no' ?
-														<button  disabled={disable} onClick={(e) => {onCheck(k.p_idx)}}>노출하기</button>
+														<button className="btn btnDetail" disabled={disable} onClick={(e) => {onCheck(k.p_idx)}}>노출하기</button>
 														:
-														<button onClick={(e) => {onCheckNo(k.p_idx)}}>노출끄기</button>
+														<button className="btn btnDetail2" onClick={(e) => {onCheckNo(k.p_idx)}}>노출끄기</button>
 													}
 												</td>
 										</tr>
@@ -244,7 +243,7 @@ export const ProductManage = (props) => {
 												<td>{k.p_price}</td>
 												<td>{k.category}</td>
 												<td>
-													<button>복구하기</button>
+													<button className="btn" style={{margin:'0'}}>복구하기</button>
 												</td>
 										</tr>
 									)

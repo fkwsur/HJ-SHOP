@@ -46,8 +46,8 @@ export const QnaDetail = () => {
 
 	return(
 			<div class="qna">
-				<button onClick={() => setAnswerList(false)}>문의내역</button>
-				<button onClick={() => setAnswerList(true)}>문의답변</button>
+				<button onClick={() => setAnswerList(false)} className="btn">문의내역</button>
+				<button onClick={() => setAnswerList(true)} className="btn">문의답변</button>
 				{answerList == false ? 
 					<table>
 							<tr>
@@ -66,12 +66,6 @@ export const QnaDetail = () => {
 												<td>{k.title}</td>
 												<td>{k.content}</td>
 												<td>{k.sending_date}</td>
-												{/* <td>
-											<button>	{check == false ? '미처리' : '처리'}</button>
-												<button>미처리</button>
-												 <button>처리</button>
-												<Link to={`/mypage/UserQnaAnswer/${k.idx}`}>처리</Link>	 
-												</td> */}
 										</tr>
 								)
 							}) : "ERROR"
@@ -88,8 +82,6 @@ export const UserQnaAnswer = ({match}) => {
 	const [answerList, setAnswerList] = useState([]);
 
 	useEffect(() => {
-		// const url = window.location.pathname;
-		// const idx = url.split('/')[3];
 		axios.post('/api/answer/qnaAnswerList', {
 			// idx : idx		
 		})
@@ -104,38 +96,33 @@ export const UserQnaAnswer = ({match}) => {
 
 	return(
 		<>
-			<table>
+	
+		<table>
+			<tr>
+				<th>NO</th>
+				<th>사용자</th>
+				<th>제목</th>
+				<th>등록일</th>
+				<th>처리상태</th>
+				<th>답변</th>
+			</tr>
 			{ answerList ? answerList.map(k => {
 				return(
 				<>
 					<tr>
-						<th>NO</th>
 						<td>{k.idx}</td>
-						<th>사용자</th>
 						<td>{k.id}</td>
-					</tr>
-					
-					<tr>
-						<th>등록일</th>
+						<td >{k.title}</td>
 						<td>{k.sending_date}</td>
-						<th>처리상태</th>
 						<td>{k.answered}</td>
-					</tr>
-
-					<tr>
-						<th>제목</th>
-						<td colSpan="3">{k.title}</td>
-					</tr>
-					
-					<tr>
-						<th>답변</th>
-						<td colSpan="3">{k.content}</td>
+						<td>{k.content}</td>
 					</tr>
 				</>
 				)
-			}) : "ERROR"
+				}) : "ERROR"
 			}
-			</table>
+		</table>
+
 		</>
 	);
 }

@@ -4,9 +4,9 @@ export const AdminDetail = (props) => {
 
 	return(
 		<>
-		<h2>{props.h2}</h2>
-
 		<form onSubmit={props.onSubmit}>
+			<button type="submit" value="submit" className="btn">등록하기</button>
+			<button onClick={props.onClick} className={props.deleteBtn}>취소하기</button>
 			<table>
 				<tbody>
 					<tr>
@@ -45,7 +45,6 @@ export const AdminDetail = (props) => {
 
 				</tbody>
 			</table>
-			<button type="submit" value="submit">등록하기</button>
 		</form>
 	</>
 	);

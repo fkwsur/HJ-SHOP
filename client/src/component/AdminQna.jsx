@@ -18,7 +18,7 @@ export const AdminQna = () => {
 	}, [])
 
 	return(
-			<div class="qna">
+			<div className="board">
 					<table>
 							<tr>
 									<th>NO</th>
@@ -37,7 +37,7 @@ export const AdminQna = () => {
 									<td>{k.content}</td>
 									<td>{k.sending_date}</td>
 									<td>
-										<button> 
+										<button className="btn btnDetail" style={{margin:'0'}}> 
 												<Link to={`/admin/QnaAnswer/${k.id}`}>
 													처리 / 미처리
 												</Link>

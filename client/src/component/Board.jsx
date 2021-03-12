@@ -8,7 +8,6 @@ export const Board = ({match}) => {
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
 	const [list, setList] = useState([]);
-	const [disable, setDisable] = useState(false); 
 
 
 	useEffect(() => {
@@ -56,12 +55,12 @@ export const Board = ({match}) => {
 
 
     return(
-    <>
-        <h1>자유게시판</h1>
-        <div class="qna">
+		<div className="container">
+			<h2>Bulletin Board</h2>
+        <div className="board">
 				{showDetail == true  ?
 					<>
-		
+				
 					<BoardDetail
 					id={window.sessionStorage.getItem('id')}
 					date="20.01.01"
@@ -69,12 +68,14 @@ export const Board = ({match}) => {
 					content={content}
 					onSubmit={onSubmit} 
 					onChange={onChange} 
+					onClick={() => setShowDetail(false)}
+					deleteBtn="btn"
 					/>
-					<button onClick={() => setShowDetail(false)}>취소하기</button>
+					{/* <button onClick={} className="btn btn_delete">취소하기</button> */}
 					</>
 					:	
 					<>
-						<button onClick={() => setShowDetail(true)}>등록하기</button>
+						<button className="btn" onClick={() => setShowDetail(true)}>등록하기</button>
 							<table>
 								<tr>
 										<th>NO</th>
@@ -104,8 +105,8 @@ export const Board = ({match}) => {
 							</table>	
 					</>
 				}
-			</div>
-    </>
+				</div>
+    </div>
     );
 }
 
@@ -184,54 +185,56 @@ export const BoardUpdate = () => {
 
 
 	return(
-		<div>
-		{window.sessionStorage.getItem('id') == boardList.writer ?
-		<form onSubmit={onSubmit}>
-			<table>
-				<tr>
-						<th>NO</th>
-						<td>{boardList.idx}</td>
-						<th>글쓴이</th>
-						<td>{boardList.writer}</td>
-				</tr>
-				<tr>
-						<th>제목</th>
-						<td><input type="text" name="title" value={title} onChange={onChange} 	required/></td>
-						<th>등록일</th>
-						<td>{boardList.created}</td>
-				</tr>
-				<tr>
-					<th>내용</th>
-					<td colspan="3">
-						<textarea type="text" name="content" value={content} 	onChange={onChange} required/>
-					</td>
-				</tr>
-			</table>	
-				<button type="submit" value="submit">수정하기</button>
-				<button type="button" onClick={handleDelete}>삭제하기</button>
-		</form>
-		: 
-		<form>
-			<table>
-				<tr>
-						<th>NO</th>
-						<td>{boardList.idx}</td>
-						<th>글쓴이</th>
-						<td>{boardList.writer}</td>
-				</tr>
-				<tr>
-						<th>제목</th>
-						<td>{boardList.title}</td>
-						<th>등록일</th>
-						<td>{boardList.created}</td>
-				</tr>
-				<tr>
-					<th>내용</th>
-					<td colSpan="3">{boardList.content}</td>
-				</tr>
-			</table>	
-		</form>
-		}
+		<div className="container">
+			<h2>Bulletin Board</h2>
+			{window.sessionStorage.getItem('id') == boardList.writer ?
+			<form onSubmit={onSubmit}>
+				<button type="submit" value="submit" className="btn">수정하기</button>
+				<button type="button" onClick={handleDelete} className="btn">삭제하기</button>
+				<Link to="/board"><button className="btn">취소하기</button></Link>
+				<table>
+					<tr>
+							<th>NO</th>
+							<td>{boardList.idx}</td>
+							<th>글쓴이</th>
+							<td>{boardList.writer}</td>
+					</tr>
+					<tr>
+							<th>제목</th>
+							<td><input type="text" name="title" value={title} onChange={onChange} 	required/></td>
+							<th>등록일</th>
+							<td>{boardList.created}</td>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td colspan="3">
+							<textarea type="text" name="content" value={content} 	onChange={onChange} required/>
+						</td>
+					</tr>
+				</table>	
+			</form>
+			: 
+			<form>
+				<table>
+					<tr>
+							<th>NO</th>
+							<td>{boardList.idx}</td>
+							<th>글쓴이</th>
+							<td>{boardList.writer}</td>
+					</tr>
+					<tr>
+							<th>제목</th>
+							<td>{boardList.title}</td>
+							<th>등록일</th>
+							<td>{boardList.created}</td>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td colSpan="3">{boardList.content}</td>
+					</tr>
+				</table>	
+			</form>
+			}
 	</div>
 
 	)
