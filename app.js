@@ -28,12 +28,12 @@ app.use('/api/product', product);
 app.use('/api/ask', ask);
 app.use('/api/answer', answer);
 app.use('/api/board', board);
+app.use('/api/basket', basket);
+app.use('/api/favorites', favorites);
 
 
 /*
 app.use('/api/buy_comment', buy_comment);
-app.use('/api/favorites', favorites);
-app.use('/api/basket', basket);
 app.use('/api/shop_comment', shop_comment);
 */
 app.listen(8080, () => {

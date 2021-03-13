@@ -154,11 +154,13 @@ router.get('/main_count', (req, res) => {
 	});
 })
 
-router.post('/category', (req, res) => {
-	let {category} = req.body;
-	console.log(category)
-	let sql = 'select * from shop_product where category = ?';
-	var data = [category];
+router.get('/category', (req, res) => {
+	console.log('1');
+	let { value } = req.query;
+	// req.get, headers, body, params, query
+	console.log(value);
+	let sql = 'select * from shop_product where category = ? and deleted = ?';
+	var data = [value, 'no'];
 	db.query(sql,data, (err,rows) => {
 		console.log(rows);
 		if(err) console.log(err);

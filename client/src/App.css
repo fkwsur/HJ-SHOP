@@ -319,6 +319,19 @@ th, td{padding:5px;}
   color: #005060;
 }
 
+.iconBtn{
+  position: relative; top: 5px;
+  padding: 0;
+  border: 0;
+  font-size: 3rem;
+  margin: 0 15px 0 0;
+  color: #005060;
+}
+.iconBtn:hover{
+  background-color: inherit;
+  color: rgb(180, 59, 69);
+}
+
 .answerTable{
   margin-top: 20px;
 }

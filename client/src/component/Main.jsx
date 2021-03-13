@@ -3,6 +3,7 @@ import mainImg from '../image/main.jpg';
 import { Link } from 'react-router-dom';
 import store from '../store/store';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom'
 import { faShoppingBasket, faHeart, faUser} from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
@@ -11,6 +12,22 @@ export const Header = () => {
         window.sessionStorage.removeItem('id');
         window.location.reload();
     }
+
+    let history = useHistory();
+
+    function clothClick(){
+        window.location.href = '/product/cloth';
+    }
+    function clothClick2(){
+        window.location.href = '/product/appliances';
+    }
+    function clothClick3(){
+        window.location.href = '/product/goods';
+    }
+    function clothClick4(){
+        window.location.href = '/product/food';
+    }
+
     return(
         <>
         <div class="header">
@@ -18,10 +35,10 @@ export const Header = () => {
             <input type="text" placeholder="Search" />
             <div class="gnb">
                 <ul>
-                    <li><Link to="/product/cloth">Cloth</Link></li>
-                    <li><Link to="/product/appliances">Appliances</Link></li>
-                    <li><Link to="/product/goods">Goods</Link></li>
-                    <li><Link to="/product/food">Food</Link></li>
+                    <li onClick={clothClick}>Cloth</li>
+                    <li onClick={clothClick2}>Appliances</li>
+                    <li onClick={clothClick3}>Goods</li>
+                    <li onClick={clothClick4}>Food</li>
                     <li><Link to="/board">Bulletin Board</Link></li>
                     <li>{window.sessionStorage.getItem('id') === 'admin' ?
                         <Link to="/admin">Admin</Link> : ''}
