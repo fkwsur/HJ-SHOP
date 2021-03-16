@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import { UserQna } from './UserQna';
-import {QnaDetail} from './QnaDetail';
+import { QnaDetail } from './QnaDetail';
+import { Basket, Favorites } from './Basket';
 
 export const MyPage = () => {
     const [menuType, setMenuType] = useState('');
@@ -22,8 +23,8 @@ export const MyPage = () => {
 
         {
         menuType == '' ? <p>마이페이지입니다</p> : 
-        menuType == 'basket' ? <p>장바구니입니다</p> :
-        menuType == 'wishList' ? <p>찜목록입니다</p> :
+        menuType == 'basket' ? <Basket /> :
+        menuType == 'wishList' ? <Favorites /> :
         menuType == 'Qna' ? <UserQna /> :
         menuType == 'QnaAnswer' ? <QnaDetail /> : ''
         }

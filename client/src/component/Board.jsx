@@ -114,6 +114,8 @@ export const BoardUpdate = () => {
 	const [showDetail, setShowDetail] = useState(false); 
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
+	const [comment, setComment] = useState('');
+	const [commentList, setCommentList] = useState([]);
 	const [boardList, setBoardList] = useState({}); 
 
 	useEffect(() => {
@@ -134,6 +136,17 @@ export const BoardUpdate = () => {
 		.catch(err => {
 			console.log(err);
 		})
+
+		axios.get(`/api/shop_comment/comment_list?value=${idx}`)
+		.then(res => {
+			console.log(res);
+			console.log('☀☀☀☀🌜🌜🌜🌜🌛🌛🌛🌚🌚');
+			setCommentList(res.data);
+			console.log(commentList);
+		})
+		.catch(err => {
+			console.log(err);
+		})
 	},[]);
 
 	const onChange = (e) => {
@@ -144,7 +157,8 @@ export const BoardUpdate = () => {
 			setTitle(value);
 		} else if (name === "content"){
 			setContent(value);
-		}
+		} else if (name === "comment")
+			setComment(value);
 	};
 
 	const onSubmit = (e) => {
@@ -183,6 +197,30 @@ export const BoardUpdate = () => {
 		});
 	}
 
+	const onClickBtn = (e) => {
+		if(!window.sessionStorage.getItem('id')){
+			alert('로그인을 해주세요.');
+			return false;
+		}
+		e.preventDefault();
+		console.log(boardList.idx);
+		console.log('🐱‍👓🐱‍🐉🐱‍💻');
+		axios.post('/api/shop_comment', {
+			id : window.sessionStorage.getItem('id'),
+			comment : comment,
+			idx : boardList.idx
+		})
+		.then(res => {
+			console.log(res);
+			alert('댓글 등록완료')
+			window.location.reload();
+		}).catch(err => {
+			console.log(err);
+			alert('댓글 등록실패')
+		});
+	}
+
+
 
 	return(
 		<div className="container">
@@ -211,7 +249,30 @@ export const BoardUpdate = () => {
 							<textarea type="text" name="content" value={content} 	onChange={onChange} required/>
 						</td>
 					</tr>
-				</table>	
+				</table>	 
+
+				<p style={{ marginTop: '50px'}}>댓글 리스트</p>
+				<table>
+					<tr>
+						<th>아이디</th>
+						<th>댓글</th>
+					</tr>
+
+					<td>{window.sessionStorage.getItem('id')}</td>
+					<td>
+						<input type="text" name="comment" value={comment} onChange={onChange} 	required/>
+						<button onClick={onClickBtn} className="btn" style={{margin:'0 0 0 25px'}}>댓글 달기</button>
+					</td>
+				{commentList ? commentList.map(k => {
+					return(
+					<tr>
+						<td>{k.writer}</td>
+						<td>{k.content}</td>
+					</tr>
+					)
+					}) : "Error"
+				}
+				</table>
 			</form>
 			: 
 			<form>
@@ -232,7 +293,34 @@ export const BoardUpdate = () => {
 						<th>내용</th>
 						<td colSpan="3">{boardList.content}</td>
 					</tr>
+					<tr>
+						<th>댓글</th>
+						<td colSpan="3">ㅁㄴㅇ</td>
+					</tr>
 				</table>	
+
+				<p style={{ marginTop: '50px'}}>댓글 리스트</p>
+				<table>
+					<tr>
+						<th>아이디</th>
+						<th>댓글</th>
+					</tr>
+
+					<td>{window.sessionStorage.getItem('id')}</td>
+					<td>
+						<input type="text" name="comment" value={comment} onChange={onChange} 	required/>
+						<button onClick={onClickBtn} className="btn" style={{margin:'0 0 0 25px'}}>댓글 달기</button>
+					</td>
+				{commentList ? commentList.map(k => {
+					return(
+					<tr>
+						<td>{k.writer}</td>
+						<td>{k.content}</td>
+					</tr>
+					)
+					}) : "Error"
+				}
+				</table>
 			</form>
 			}
 	</div>

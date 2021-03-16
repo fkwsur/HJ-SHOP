@@ -1,4 +1,5 @@
 import {useState,useEffect} from 'react';
+// import PayPage from './Pay'
 import mainImg from '../image/main.jpg';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -66,7 +67,7 @@ export const ProductFormatList = (props) => {
 		console.log('🍳');
 		axios.post('/api/basket', {
 			p_idx : productList.p_idx,
-			id : productList.p_name
+			id : window.sessionStorage.getItem('id')
 		})
 		.then(res => {
 			console.log(res);
@@ -82,15 +83,17 @@ export const ProductFormatList = (props) => {
 		e.preventDefault();
 		console.log(productList.p_idx);
 		console.log('🍳');
+		console.log(window.sessionStorage.getItem('id'));
 		axios.post('/api/favorites', {
 			p_idx : productList.p_idx,
-			id : productList.p_name
+			id : window.sessionStorage.getItem('id')
 		})
 		.then(res => {
 			console.log(res);
 			alert('찜하기 목록에 추가되었습니다.');
 		})
 		.catch(err => {
+			console.log(err);
 			alert('에러가 발생했습니다.')
 		})
 	}
@@ -101,6 +104,11 @@ export const ProductFormatList = (props) => {
 				<Link to={`/product/${urlCategory}`}>
 					<button className="btn">취소하기</button>
 				</Link>
+
+				<Link to={'/PayPage'}>
+					<button className="btn">구매하기</button>
+				</Link>
+
 					<button onClick={onClick} className="btn iconBtn"><FontAwesomeIcon icon={faShoppingBasket} /></button>
 					<button onClick={onClick2} className="btn iconBtn"><FontAwesomeIcon icon={faHeart} /></button>
 				<table>
@@ -148,6 +156,7 @@ export const Product = () => {
 	const getData = (category) => {
 		axios.get(`/api/product/category?value=${category}`)
 		.then(res => {
+			console.log('1')
 			console.log(res);
 			setProductList(res.data);
 			console.log(productList.deleted);

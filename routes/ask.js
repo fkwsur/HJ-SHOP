@@ -1,37 +1,10 @@
-const express = require('express');
-const db = require('../database/db');
-const router = express.Router();
+const router = require('express').Router();
+const { askController : controller } = require('../controller');
 
-router.post('/qna',(req, res) => {
-	let {id, title, content} = req.body;
-	let sql = 'insert into shop_ask(id,title,content,sending_date) values(?,?,?,NOW())';
-	var data = [id, title, content];
-	db.query(sql,data,(err,rows) => {
-		if(err) console.log(err);
-		console.log(rows);
-		res.send(rows);
-	})
-}); 
+router.post('/qna', controller.Qna); 
 
-router.get('/AdminQna',(req, res) => {
-	let sql = 'select * from shop_ask;';
-	db.query(sql,(err,rows) => {
-		if(err) console.log(err);
-		console.log(rows);
-		res.send(rows);
-	})
-}); 
+router.get('/AdminQna', controller.AdminQna); 
 
-router.post('/qnaId_post',(req, res) => {
-	let { id } = req.body;
-	console.log(id);
-	let sql = 'select * from shop_ask where id = ?';
-	var data = [id];
-	db.query(sql,data,(err,rows) => {
-		if(err) console.log(err);
-		console.log(rows);
-		res.send(rows);
-	})
-}); 
+router.post('/qnaId_post', controller.QnaId_Post); 
 
 module.exports = router;

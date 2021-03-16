@@ -8,6 +8,8 @@ import { faShoppingBasket, faHeart, faUser} from "@fortawesome/free-solid-svg-ic
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 export const Header = () => {
+    const [search, setSearch] = useState();
+
     const remove = () =>{
         window.sessionStorage.removeItem('id');
         window.location.reload();
@@ -28,11 +30,45 @@ export const Header = () => {
         window.location.href = '/product/food';
     }
 
+    const onSearch = (e) => {
+        const {
+            target: {name, value},
+        } = e;
+        setSearch(value);
+    }
+
+    const onSearchEnter = (e) => {
+        e.preventDefault();
+        if(e.key === 'Enter'){
+            onPrettySearch(search);
+        }        
+    }
+
+    const onPrettySearch = (result) => {
+        axios.get(`/api/product/search?result=${result}`, {
+            data : search
+        }).then(res => {
+            console.log(res);
+        }).catch(err => {
+            console.log(err);
+        })
+        
+    }
+
     return(
         <>
         <div class="header">
             <h2><Link to="/">HJ SHOP</Link></h2>
-            <input type="text" placeholder="Search" />
+
+            {/* 검색창 여깄어여 */}
+            <input 
+             type="text" 
+             placeholder="Search" 
+             name="search" 
+             value={search}
+             onChange={onSearch}  
+             onKeyPress={onSearchEnter}
+            />
             <div class="gnb">
                 <ul>
                     <li onClick={clothClick}>Cloth</li>

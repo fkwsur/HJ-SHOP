@@ -1,171 +1,68 @@
-const express = require('express');
-const db = require('../database/db');
-const router = express.Router();
+const router = require('express').Router();
+const {productController : controller} = require('../controller');
 const multer = require('multer');
 const upload = multer({dest : './uploads'});
 
 
-router.post('/product_add_item', upload.fields([{name : 'image'},{name : 'detailImage'}]), (req,res) => {
-	let {title, price, select, content} = req.body;
-	let image = '/img/' + req.files.image[0].filename;
-	let detailImage = '/img/' + req.files.detailImage[0].filename;
-	let sql = 'insert into shop_product(p_name,p_price,category,p_content,p_img,p_img2,main,deleted) values(?,?,?,?,?,?,?,?)';
-	var data = [title, price, select, content, image, detailImage, 'no', 'no']
-	db.query(sql,data, (err, rows) => {
-		if(err) console.log(err);
-		if(rows){
-			res.send('1');
-		} else {
-			res.send('0');
-		}
-	})
-});
+router.post('/product_add_item', upload.fields([{name : 'image'},{name : 'detailImage'}]), controller.Product_add_item);
 
-router.get('/product_list', (req, res) => {
-	let {p_idx} = req.body;
-	console.log(p_idx);
-	let sql = 'select * from shop_product where deleted = ?';
-	var data = ['no'];
-	db.query(sql,data, (err, rows) => {
-		if(err) console.log(err);
-		res.send(rows);
-	});
-})
+router.get('/product_list', controller.Product_list);
 
-router.get('/product_delete_list', (req, res) => {
-	let {p_idx} = req.body;
-	console.log(p_idx);
-	let sql = 'select * from shop_product where deleted = ?';
-	var data = ['yes'];
-	db.query(sql,data, (err, rows) => {
-		if(err) console.log(err);
-		res.send(rows);
-	});
-})
+router.get('/product_delete_list', controller.Product_delete_list)
+
+router.post('/product_detail_list', controller.Product_detail_list)
+
+router.post('/AdminUpdate', upload.fields([{name : 'image'},{name : 'detailImage'}]), controller.AdminUpdate);
+
+router.post('/AdminDelete', controller.AdminDelete);
+
+router.get('/main', controller.Main); 
+
+router.post('/main_yes', controller.Main_yes); 
+
+router.post('/main_no', controller.Main_no); 
 
 
+router.get('/main_count', controller.Main_count)
 
-router.post('/product_detail_list', (req, res) => {
-	let {p_idx} = req.body;
-	console.log(p_idx);
-	let sql = 'select * from shop_product where p_idx = ? and deleted = ?'; 
-	var data = [p_idx, 'no'];
-	db.query(sql,data, (err, rows) => {
-		if(err) console.log(err);
-		console.log(rows);
-		res.send(rows);
-	});
-})
+router.get('/category', controller.Category)
 
-router.post('/AdminUpdate', upload.fields([{name : 'image'},{name : 'detailImage'}]), (req,res) => {
+router.get('/search', controller.Search)
 
-	const obj = JSON.parse(JSON.stringify(req.files));
-	console.log(obj.image, obj.detailImage);
-	console.log(obj);
-		var image;
-		var detailImage;
+// import = () => {
+// 	const IMP = window.IMP;
+// 	IMP.init('imp89257980');
+// 	IMP.request_pay(
+// 		{
+// 			pg: 'html5_inicis',
+// 			pay_method: 'card',
+// 			merchant_uid: 'merchant_' + new Date().getTime(),
+// 			name: '주문명:결제테스트',
+// 			amount: this.state.price,
+// 			buyer_tel: '010-1234-5678',
+// 		},
+// 		function (rsp) {
+// 			if (rsp.success) {
+// 				var msg = '결제가 완료되었습니다.';
+// 				msg += '고유ID : ' + rsp.imp_uid;
+// 				msg += '상점 거래ID : ' + rsp.merchant_uid;
+// 				msg += '결제 금액 : ' + rsp.paid_amount;
+// 				msg += '카드 승인번호 : ' + rsp.apply_num;
 
-	if(!obj.image && obj.detailImage){
-		console.log('1')
-		image = req.body.image;
-		detailImage = '/img/' + req.files.detailImage[0].filename;
-	}else if(obj.image && !obj.detailImage){
-		console.log('11')
-		image = '/img/' + req.files.image[0].filename;
-		detailImage = req.body.detailImage;
-	} else if(obj.image && obj.detailImage){
-		console.log('111')
-		image = '/img/' + req.files.image[0].filename;
-		detailImage = '/img/' + req.files.detailImage[0].filename;
-	} else {
-		console.log('1111')
-		image = req.body.image;
-		detailImage = req.body.image;
- 	}
-	
-	let {p_idx, title, price, select, content} = req.body;
-	let sql = 'update shop_product set p_name = ?, p_price = ?, category = ?, p_content = ?, p_img = ?, p_img2 = ?, main = ?, deleted = ? where p_idx = ?';
-	var data = [title, price, select, content, image, detailImage, 'no', 'no', p_idx]
-	db.query(sql,data, (err, rows) => {
-		if(err) console.log(err);
-		if(rows){
-			res.send('1');
-		} else {
-			res.send('0');
-		}
-	})
-});
+// 				axios.post('http://localhost:8081/api/payment/iamport', {
+// 					imp_uid: rsp.imp_uid,
+// 					merchant_uid: rsp.merchant_uid,
+// 				});
+// 				window.close();
+// 			} else {
+// 				var msg = '결제에 실패하였습니다.';
+// 				msg += '에러내용 : ' + rsp.error_msg;
+// 				window.close();
+// 			}
 
-router.post('/AdminDelete', (req, res) => {
-	let {p_idx} = req.body;
-	console.log(p_idx);
-	let sql = 'update shop_product set deleted = ? where p_idx = ?'; 
-	var data = ['yes', p_idx];
-	db.query(sql,data, (err, rows) => {
-		if(err) console.log(err);
-		console.log(rows);
-		res.send('1');
-	});
-})
-
-router.get('/main',(req, res) => {
-	let sql = 'select * from shop_product where main = ?';
-	var data = ['yes'];
-	db.query(sql,data, (err,rows) => {
-		if(err) console.log(err);
-		console.log(rows);
-		res.send(rows);
-	});
-}); 
-
-router.post('/main_yes',(req, res) => {
-	let {p_idx} = req.body;
-	console.log(p_idx);
-	console.log('값');
-	let sql = 'update shop_product set main = ? where p_idx = ?';
-	var data = ['yes', p_idx];
-	db.query(sql,data, (err,rows) => {
-		if(err) console.log(err);
-		console.log(rows);
-		res.send(rows);
-	});
-}); 
-
-router.post('/main_no',(req, res) => {
-	let {p_idx} = req.body;
-	console.log(p_idx);
-	console.log('값');
-	let sql = 'update shop_product set main = ? where p_idx = ?';
-	var data = ['no', p_idx];
-	db.query(sql,data, (err,rows) => {
-		if(err) console.log(err);
-		console.log(rows);
-		res.send(rows);
-	});
-}); 
-
-
-router.get('/main_count', (req, res) => {
-	let sql = 'select count(*) AS count from shop_product where main = "yes"';
-	db.query(sql, (err,rows) => {
-		if(err) console.log(err);
-		console.log(rows);
-		res.send(rows);
-	});
-})
-
-router.get('/category', (req, res) => {
-	console.log('1');
-	let { value } = req.query;
-	// req.get, headers, body, params, query
-	console.log(value);
-	let sql = 'select * from shop_product where category = ? and deleted = ?';
-	var data = [value, 'no'];
-	db.query(sql,data, (err,rows) => {
-		console.log(rows);
-		if(err) console.log(err);
-		res.send(rows);
-	});
-})
+// 			alert(msg);
+// 		}
+// 	);
+// };
 
 module.exports = router;

@@ -7,6 +7,7 @@ import {Admin} from './component/Admin.jsx'
 import {Product, ProductFormatList} from './component/Product.jsx'
 import {MyPage} from './component/MyPage.jsx'
 import {AdminUpdate} from './component/AdminUpdate.jsx'
+import PayPage from './component/Pay.jsx'
 import {QnaAnswer} from './component/QnaAnswer.jsx'
 import {UserQnaAnswer} from './component/QnaDetail.jsx'
 
@@ -35,6 +36,7 @@ function App() {
           <Route exact path="/product/goods/:id" component={ProductFormatList}/>
           <Route exact path="/product/food/:id" component={ProductFormatList}/>
           <Route exact path="/mypage" component={MyPage}/>
+          <Route exact path="/PayPage" component={PayPage}/>
           <Route exact path="/mypage/UserQnaAnswer/:id" component={UserQnaAnswer}/>
          </Switch>
         <Footer />
