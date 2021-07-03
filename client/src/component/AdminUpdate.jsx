@@ -9,7 +9,7 @@ export const AdminUpdate = ({ props, match }) => {
 	const [price, setPrice] = useState('');
 	const [select, setSelect] = useState('');
 	const [content, setContent] = useState('');
-	const [productList, setProductList] = useState({}); 
+	const [productList, setProductList] = useState([]); 
 
 	useEffect(() => {
 		const url = window.location.pathname;

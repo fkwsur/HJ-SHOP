@@ -8,11 +8,11 @@ const helmet = require('helmet');
 const Router = require('./routes')
 
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: false})); // 해킹방지
 app.use(cors());
 app.use('/img', express.static('./uploads'));
-app.use(compression());
-app.use(helmet());
+app.use(compression()); //메모리 최적화
+app.use(helmet()); //기본적인 보안세팅
 
 app.use('/api/member', Router.memberRouter);
 app.use('/api/email', Router.emailRouter);
